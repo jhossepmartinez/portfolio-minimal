@@ -1,0 +1,94 @@
+---
+title: "Cloudflare Worker Q&A Service"
+date: "2026-03-03"
+description: "A case study on designing a production-grade, AI-powered Q&A API with full Infrastructure as Code, automated delivery, and zero manual operations — shipped in 10 days."
+---
+
+What does it take to ship a production-ready system alone, from scratch, in under two weeks? This case study documents the design decisions, tradeoffs, and outcomes behind a serverless Q&A API built on Cloudflare Workers covering infrastructure provisioning, secure authentication, cost-aware AI integration, and a fully automated delivery pipeline.
+
+## The Challenge
+
+The goal was to build a multi-user Q&A service where authenticated users can submit questions, receive AI-generated answers, and retrieve their full history, all without any manual infrastructure management or deployment steps. Every constraint, from cost to security to operational safety, had to be addressed in code.
+
+The system needed to satisfy seven clear outcomes:
+
+- Expose an AI-backed question endpoint accessible via a simple HTTP call
+- Deploy to reproducible, isolated staging and production environments
+- Persist every interaction for auditability and user history
+- Gate access behind a real OAuth identity flow
+- Enforce per-user rate limits to prevent token-cost abuse
+- Provide observable system behavior without affecting response performance
+- Make CI/CD the only deployment path — no manual applies, no exceptions
+
+## Architecture
+
+The system runs on **Cloudflare Workers**, a serverless edge runtime, meaning that it has really low latency. This choice sets the architectural constraints and opportunities for everything else: cold starts are negligible, execution is stateless, and all dependencies (D1 database, Observability, Logs) are bound at the platform level.
+
+The full stack is narrow by design:
+
+- **Cloudflare Workers** for compute, **Cloudflare D1** for persistence, and **Cloudflare Analytics Engine** for event telemetry — keeping the entire data plane within the same network boundary
+- **Terraform + Terraform Cloud** for infrastructure provisioning and remote state
+- **GitHub Actions** for build, test, and deployment orchestration
+- **OpenAI (gpt-4o-mini)** for AI responses, selected for quality-to-cost ratio
+- **GitHub OAuth 2.0 + HMAC-signed JWT** for identity and session management
+
+Keeping compute and storage colocated wasn't just a performance choice — it simplified identity and access management and eliminated a class of cross-service billing complexity.
+
+## Key Tradeoffs
+
+Good architecture is defined as much by what was rejected as by what was chosen.
+
+**Cloudflare D1 over Supabase.** Supabase was provisioned and tested before being reverted in favor of D1. The deciding factor was latency: an external managed Postgres instance introduces a cross-network hop on every request. D1, that is within Cloudflare's network, eliminates this issue. The billing model is also simpler, serverless per-request pricing versus a minimum monthly commitment for a managed database.
+
+**OpenAI over Google AI.** The first version shipped with Google AI. It was replaced in the second major release after evaluating response quality against cost at the target query volume. gpt-4o-mini with minimal reasoning mode consistently outperformed on answer response time.
+
+**Immutable user identifiers for rate limiting.** GitHub usernames are mutable, a user can rename their account. As such, rate limiting must be enforced on the user immutable ID rather than their usernames. This prevents a bypass vector where a user renames their account mid-session to reset their rate limit counter.
+
+**Separate credentials per environment.** Staging and production each have their own GitHub OAuth application and an independent JWT signing secret. A token issued in staging is cryptographically invalid in production. This hard boundary reduces the blast radius of a credential compromise.
+
+## Infrastructure as Code
+
+Every cloud resource, the Worker script, the database, the rate limit rules, the analytics binding, and all credentials, is declared in Terraform and applied exclusively through CI/CD. Nothing exists in the Cloudflare dashboard that wasn't provisioned from code.
+
+The infrastructure is organized around a reusable Terraform module applied independently to two environments. Staging and production share the same module definition but have completely separate secrets and OAuth applications. This means environment parity is guaranteed structurally.
+
+Remote state is managed through Terraform Cloud, allowing for a remote state mangaement and drift protections.
+
+## Delivery Pipeline
+
+The CI/CD pipeline enforces a strict promotion model: **build once, promote upward**.
+
+When a pull request is opened, the pipeline runs `terraform plan` across both environments and surfaces the diff inside the PR for review. Making all infrastructure changes visible before merge.
+
+On merge to main, the staging workflow builds the TypeScript bundle, deploys it, and runs database migrations automatically. If and only if staging succeeds, a production deployment becomes available, requiring explicit human approval before proceeding. The production workflow then downloads the *exact same compiled artifact* from the staging run rather than rebuilding from source. What runs in production is byte-for-byte identical to what has been validated and tested in staging.
+
+> The pipeline doesn't just automate deployment, it enforces the conditions under which deployment is safe.
+
+Database schema changes are never applied manually. Migrations are versioned alongside the application code and applied automatically after every infrastructure update.
+
+## Security Model
+
+Authentication is a two-step flow: GitHub OAuth establishes identity, and a short-lived HMAC-signed JWT carries that identity across subsequent requests. The JWT payload contains only the user's ID, their display name (username), and an expiry, nothing sensitive.
+
+All credentials are stored in GitHub Environments and injected into Terraform at runtime. They never appear in source code, build logs, or version control. Staging and production credentials are scoped to their respective GitHub Environments, meaning a compromised staging secret cannot be used to access production resources.
+
+Rate limiting is enforced at the Cloudflare platform level, not in application code. This makes it tamper-resistant: a bug or exploit in the Worker cannot disable or circumvent the rate limit.
+
+## Observability
+
+Every request through the `/ask` endpoint produces an asynchronous telemetry event capturing request metadata, response metadata, model latency, and token usage. These events are written to Cloudflare Analytics Engine without blocking the response, making it possible for the user to receive their answer while the telemetry write completes independently.
+
+All authentication failures and application errors emit structured log entries with a unique request identifier, the user's ID, the endpoint, and the full error context. This makes individual request traces reconstructable  without exposing user-identifying information.
+
+The persistence layer also serves as an audit trail. Every question and answer is stored with a timestamp and the user's ID, enabling cost attribution per user and anomaly detection over time.
+
+## Iterative Delivery
+
+The project shipped three semantic versions over 10 days, with each version representing a deliberate scope boundary rather than arbitrary milestones.
+
+**v1.0.0** established the core: a working AI endpoint, automated releases, and semantic versioning from the first commit. **v2.0.0** introduced persistent state — a breaking change, acknowledged as such, with the Supabase-to-D1 tradeoff resolved during this phase. **v2.1.0** completed the security and operational layer: environment isolation, OAuth, rate limiting, and observability all landed together.
+
+Post-release work focused on correctness and maintainability — DB normalization for rate-limit integrity, history scoping to authenticated users, and a structural refactor for cleaner separation of concerns.
+
+Each release was driven by a CHANGELOG generated automatically from conventional commit messages, keeping the delivery history readable without manual documentation effort.
+
