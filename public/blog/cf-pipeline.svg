@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300">
+  <rect width="800" height="300" fill="#161616"/>
+
+  <!-- nodes: build · staging · gate · production -->
+
+  <!-- Build -->
+  <rect x="40" y="110" width="120" height="56" rx="8" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="100" y="135" text-anchor="middle" fill="#888" font-family="monospace" font-size="12">Build</text>
+  <text x="100" y="153" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">artifact + sha</text>
+
+  <!-- arrow -->
+  <line x1="160" y1="138" x2="206" y2="138" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="202,133 212,138 202,143" fill="#2a2a2a"/>
+
+  <!-- Staging -->
+  <rect x="216" y="110" width="130" height="56" rx="8" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="281" y="135" text-anchor="middle" fill="#888" font-family="monospace" font-size="12">Staging</text>
+  <text x="281" y="153" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">deploy + test</text>
+
+  <!-- arrow -->
+  <line x1="346" y1="138" x2="392" y2="138" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="388,133 398,138 388,143" fill="#2a2a2a"/>
+
+  <!-- Gate (diamond) -->
+  <polygon points="430,108 466,138 430,168 394,138" fill="#1c1c1c" stroke="#333" stroke-width="1"/>
+  <text x="430" y="142" text-anchor="middle" fill="#777" font-family="monospace" font-size="10">gate</text>
+
+  <!-- fail path down -->
+  <line x1="430" y1="168" x2="430" y2="212" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="444" y="200" fill="#3a3a3a" font-family="monospace" font-size="9">fail → blocked</text>
+
+  <!-- pass arrow -->
+  <line x1="466" y1="138" x2="512" y2="138" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="508,133 518,138 508,143" fill="#2a2a2a"/>
+  <text x="489" y="128" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="9">pass</text>
+
+  <!-- Production -->
+  <rect x="522" y="110" width="150" height="56" rx="8" fill="#1e1e1e" stroke="#333" stroke-width="1"/>
+  <text x="597" y="132" text-anchor="middle" fill="#999" font-family="monospace" font-size="12">Production</text>
+  <text x="597" y="149" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">same artifact</text>
+  <text x="597" y="162" text-anchor="middle" fill="#404040" font-family="monospace" font-size="9">human approval</text>
+
+  <!-- artifact equality mark -->
+  <line x1="100" y1="166" x2="100" y2="230" stroke="#222" stroke-width="1" stroke-dasharray="3 4"/>
+  <line x1="597" y1="166" x2="597" y2="230" stroke="#222" stroke-width="1" stroke-dasharray="3 4"/>
+  <line x1="100" y1="230" x2="597" y2="230" stroke="#222" stroke-width="1" stroke-dasharray="3 4"/>
+  <text x="348" y="248" text-anchor="middle" fill="#383838" font-family="monospace" font-size="10">byte-for-byte identical — no rebuild from source</text>
+
+  <!-- bottom note -->
+  <text x="400" y="276" text-anchor="middle" fill="#2e2e2e" font-family="monospace" font-size="10">staging must pass before production deployment is available</text>
+</svg>

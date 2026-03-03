@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300">
+  <rect width="800" height="300" fill="#161616"/>
+
+  <!-- spine -->
+  <line x1="80" y1="150" x2="720" y2="150" stroke="#222" stroke-width="1.5"/>
+
+  <!-- day ticks -->
+  <line x1="80"  y1="144" x2="80"  y2="156" stroke="#2a2a2a" stroke-width="1"/>
+  <line x1="720" y1="144" x2="720" y2="156" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="80"  y="170" text-anchor="middle" fill="#383838" font-family="monospace" font-size="9">day 1</text>
+  <text x="720" y="170" text-anchor="middle" fill="#383838" font-family="monospace" font-size="9">day 10</text>
+
+  <!-- ── v1.0.0 ── day ~2 -->
+  <circle cx="172" cy="150" r="6" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1.5"/>
+  <!-- card above -->
+  <rect x="100" y="40" width="148" height="84" rx="8" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <line x1="172" y1="124" x2="172" y2="144" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="174" y="62" fill="#888" font-family="monospace" font-size="12">v1.0.0</text>
+  <text x="174" y="80" fill="#505050" font-family="monospace" font-size="10">AI endpoint</text>
+  <text x="174" y="96" fill="#505050" font-family="monospace" font-size="10">auto-releases</text>
+  <text x="174" y="112" fill="#505050" font-family="monospace" font-size="10">semver from day 1</text>
+
+  <!-- ── v2.0.0 ── day ~5 -->
+  <circle cx="400" cy="150" r="6" fill="#1c1c1c" stroke="#333" stroke-width="1.5"/>
+  <!-- card below -->
+  <rect x="328" y="176" width="148" height="84" rx="8" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <line x1="400" y1="156" x2="400" y2="176" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="402" y="198" fill="#888" font-family="monospace" font-size="12">v2.0.0</text>
+  <text x="402" y="216" fill="#505050" font-family="monospace" font-size="10">persistent state</text>
+  <text x="402" y="232" fill="#505050" font-family="monospace" font-size="10">D1 replaces</text>
+  <text x="402" y="248" fill="#404040" font-family="monospace" font-size="10">Supabase</text>
+
+  <!-- breaking change badge -->
+  <rect x="328" y="252" width="148" height="1" fill="#222"/>
+
+  <!-- ── v2.1.0 ── day ~10 -->
+  <circle cx="628" cy="150" r="6" fill="#1e1e1e" stroke="#444" stroke-width="1.5"/>
+  <!-- card above -->
+  <rect x="556" y="40" width="148" height="84" rx="8" fill="#1e1e1e" stroke="#333" stroke-width="1"/>
+  <line x1="628" y1="124" x2="628" y2="144" stroke="#333" stroke-width="1"/>
+  <text x="558" y="62" fill="#999" font-family="monospace" font-size="12">v2.1.0</text>
+  <text x="558" y="80" fill="#606060" font-family="monospace" font-size="10">OAuth + JWT</text>
+  <text x="558" y="96" fill="#606060" font-family="monospace" font-size="10">rate limiting</text>
+  <text x="558" y="112" fill="#606060" font-family="monospace" font-size="10">observability</text>
+
+  <text x="400" y="278" text-anchor="middle" fill="#2e2e2e" font-family="monospace" font-size="10">10 days · 3 releases · CHANGELOG generated from conventional commits</text>
+</svg>

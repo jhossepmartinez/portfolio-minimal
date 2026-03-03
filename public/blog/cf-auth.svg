@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300">
+  <rect width="800" height="300" fill="#161616"/>
+
+  <!-- Step 1: User -->
+  <rect x="30" y="110" width="100" height="56" rx="8" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="80" y="135" text-anchor="middle" fill="#888" font-family="monospace" font-size="11">User</text>
+  <text x="80" y="153" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">/auth/login</text>
+
+  <!-- arrow -->
+  <line x1="130" y1="138" x2="168" y2="138" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="164,133 174,138 164,143" fill="#2a2a2a"/>
+  <text x="151" y="128" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="9">redirect</text>
+
+  <!-- Step 2: GitHub OAuth -->
+  <rect x="178" y="110" width="130" height="56" rx="8" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="243" y="132" text-anchor="middle" fill="#888" font-family="monospace" font-size="11">GitHub OAuth</text>
+  <text x="243" y="149" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">user authorizes</text>
+  <text x="243" y="162" text-anchor="middle" fill="#404040" font-family="monospace" font-size="9">returns code</text>
+
+  <!-- arrow -->
+  <line x1="308" y1="138" x2="346" y2="138" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="342,133 352,138 342,143" fill="#2a2a2a"/>
+  <text x="327" y="128" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="9">code</text>
+
+  <!-- Step 3: Worker signs JWT -->
+  <rect x="356" y="97" width="148" height="82" rx="8" fill="#1c1c1c" stroke="#333" stroke-width="1"/>
+  <text x="430" y="118" text-anchor="middle" fill="#999" font-family="monospace" font-size="11">Worker</text>
+  <text x="430" y="134" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">exchange token</text>
+  <text x="430" y="150" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">fetch user ID</text>
+  <text x="430" y="166" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">sign HMAC-SHA256</text>
+
+  <!-- arrow -->
+  <line x1="504" y1="138" x2="542" y2="138" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="538,133 548,138 538,143" fill="#2a2a2a"/>
+  <text x="523" y="128" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="9">JWT</text>
+
+  <!-- Step 4: JWT payload -->
+  <rect x="552" y="97" width="200" height="82" rx="8" fill="#1a1a1a" stroke="#252525" stroke-width="1"/>
+  <text x="652" y="118" text-anchor="middle" fill="#888" font-family="monospace" font-size="11">JWT payload</text>
+  <text x="652" y="135" text-anchor="middle" fill="#555" font-family="monospace" font-size="10">sub: immutable user ID</text>
+  <text x="652" y="151" text-anchor="middle" fill="#555" font-family="monospace" font-size="10">login: username</text>
+  <text x="652" y="167" text-anchor="middle" fill="#555" font-family="monospace" font-size="10">exp: short-lived</text>
+
+  <!-- reuse note -->
+  <text x="430" y="218" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="10">every subsequent request — Worker verifies signature + expiry</text>
+
+  <!-- immutable ID note -->
+  <rect x="178" y="196" width="214" height="36" rx="6" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+  <text x="285" y="212" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">rate limit keyed on user ID</text>
+  <text x="285" y="226" text-anchor="middle" fill="#404040" font-family="monospace" font-size="9">not username — immutable, unbypassable</text>
+
+  <text x="400" y="272" text-anchor="middle" fill="#2e2e2e" font-family="monospace" font-size="10">staging and production have separate OAuth apps and signing secrets</text>
+</svg>

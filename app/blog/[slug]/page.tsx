@@ -39,7 +39,7 @@ export function generateStaticParams() {
   const contentPath = path.join(process.cwd(), "content");
   const entries = readdirSync(contentPath);
 
-  return entries.map((entry) => [{ slug: entry }]);
+  return entries.map((entry) => ({ slug: entry }));
 }
 
 export const dynamicParams = false;

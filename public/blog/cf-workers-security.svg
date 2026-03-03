@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#161616"/>
+
+  <!-- Title -->
+  <text x="600" y="58" text-anchor="middle" fill="#666" font-family="monospace" font-size="13" letter-spacing="2">SECURITY MODEL</text>
+  <text x="600" y="78" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="10">GitHub OAuth · HMAC-signed JWT · rate limiting</text>
+
+  <!-- ── 1. User / Browser ── -->
+  <rect x="48" y="220" width="130" height="80" rx="10" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="113" y="254" text-anchor="middle" fill="#888" font-family="monospace" font-size="11">User</text>
+  <text x="113" y="272" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">browser</text>
+  <text x="113" y="290" text-anchor="middle" fill="#404040" font-family="monospace" font-size="9">GET /auth/login</text>
+
+  <!-- 1→2 -->
+  <line x1="178" y1="260" x2="236" y2="260" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="232,255 242,260 232,265" fill="#2a2a2a"/>
+  <text x="207" y="250" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="9">redirect</text>
+
+  <!-- ── 2. GitHub OAuth ── -->
+  <rect x="246" y="210" width="140" height="100" rx="10" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="316" y="242" text-anchor="middle" fill="#888" font-family="monospace" font-size="11">GitHub</text>
+  <text x="316" y="258" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">OAuth 2.0</text>
+  <rect x="264" y="268" width="104" height="16" rx="3" fill="#222"/>
+  <text x="316" y="280" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">user authorizes</text>
+  <rect x="264" y="290" width="104" height="16" rx="3" fill="#222"/>
+  <text x="316" y="302" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">immutable user ID</text>
+
+  <!-- 2→3 code callback -->
+  <line x1="386" y1="260" x2="444" y2="260" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="440,255 450,260 440,265" fill="#2a2a2a"/>
+  <text x="415" y="250" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="9">code</text>
+
+  <!-- ── 3. Worker: token exchange ── -->
+  <rect x="454" y="195" width="160" height="130" rx="10" fill="#1c1c1c" stroke="#333" stroke-width="1"/>
+  <text x="534" y="222" text-anchor="middle" fill="#999" font-family="monospace" font-size="11">Worker</text>
+  <text x="534" y="238" text-anchor="middle" fill="#505050" font-family="monospace" font-size="9">token exchange</text>
+  <rect x="470" y="246" width="128" height="16" rx="3" fill="#222"/>
+  <text x="534" y="258" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">fetch access_token</text>
+  <rect x="470" y="268" width="128" height="16" rx="3" fill="#222"/>
+  <text x="534" y="280" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">fetch github user</text>
+  <rect x="470" y="288" width="128" height="16" rx="3" fill="#222"/>
+  <text x="534" y="300" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">sign HMAC-SHA256</text>
+  <rect x="470" y="308" width="128" height="10" rx="2" fill="#1e1e1e"/>
+
+  <!-- 3→4 JWT issued -->
+  <line x1="614" y1="260" x2="672" y2="260" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="668,255 678,260 668,265" fill="#2a2a2a"/>
+  <text x="643" y="250" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="9">JWT</text>
+
+  <!-- ── 4. JWT structure ── -->
+  <rect x="682" y="195" width="174" height="130" rx="10" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="769" y="220" text-anchor="middle" fill="#888" font-family="monospace" font-size="11">JWT Payload</text>
+  <rect x="698" y="228" width="142" height="14" rx="3" fill="#222"/>
+  <text x="769" y="240" text-anchor="middle" fill="#606060" font-family="monospace" font-size="9">sub: github_user_id</text>
+  <rect x="698" y="246" width="142" height="14" rx="3" fill="#222"/>
+  <text x="769" y="258" text-anchor="middle" fill="#606060" font-family="monospace" font-size="9">login: username</text>
+  <rect x="698" y="264" width="142" height="14" rx="3" fill="#222"/>
+  <text x="769" y="276" text-anchor="middle" fill="#606060" font-family="monospace" font-size="9">iat / exp</text>
+  <rect x="698" y="282" width="142" height="14" rx="3" fill="#222"/>
+  <text x="769" y="294" text-anchor="middle" fill="#606060" font-family="monospace" font-size="9">sig: HMAC-SHA256</text>
+  <text x="769" y="316" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="9">secret in env var</text>
+
+  <!-- 4→5 subsequent requests -->
+  <line x1="856" y1="260" x2="914" y2="260" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="910,255 920,260 910,265" fill="#2a2a2a"/>
+  <text x="885" y="250" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="9">Bearer</text>
+
+  <!-- ── 5. Worker: request guard ── -->
+  <rect x="924" y="195" width="160" height="130" rx="10" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="1004" y="222" text-anchor="middle" fill="#888" font-family="monospace" font-size="11">Worker</text>
+  <text x="1004" y="238" text-anchor="middle" fill="#505050" font-family="monospace" font-size="9">per-request guard</text>
+  <rect x="940" y="246" width="128" height="16" rx="3" fill="#222"/>
+  <text x="1004" y="258" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">verify signature</text>
+  <rect x="940" y="268" width="128" height="16" rx="3" fill="#222"/>
+  <text x="1004" y="280" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">check expiry</text>
+  <rect x="940" y="288" width="128" height="16" rx="3" fill="#222"/>
+  <text x="1004" y="300" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">rate limit by sub</text>
+  <rect x="940" y="308" width="128" height="10" rx="2" fill="#1e1e1e"/>
+
+  <!-- rate limit detail box -->
+  <rect x="880" y="410" width="248" height="64" rx="8" fill="#1a1a1a" stroke="#252525" stroke-width="1"/>
+  <text x="1004" y="432" text-anchor="middle" fill="#606060" font-family="monospace" font-size="10">Rate limit enforced at platform level</text>
+  <text x="1004" y="450" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">D1 counter keyed by immutable user ID</text>
+  <text x="1004" y="466" text-anchor="middle" fill="#404040" font-family="monospace" font-size="9">not in app logic · not bypassable</text>
+  <!-- connector from worker to rate limit box -->
+  <line x1="1004" y1="325" x2="1004" y2="410" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- D1 audit trail note -->
+  <rect x="72" y="420" width="480" height="54" rx="8" fill="#1a1a1a" stroke="#252525" stroke-width="1"/>
+  <text x="312" y="441" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">Every authenticated request written to D1 — full audit trail</text>
+  <text x="312" y="457" text-anchor="middle" fill="#404040" font-family="monospace" font-size="9">request_id · user_id · timestamp · status</text>
+  <text x="312" y="471" text-anchor="middle" fill="#383838" font-family="monospace" font-size="9">credentials isolated per env · no shared secrets</text>
+
+  <!-- bottom line -->
+  <line x1="80" y1="560" x2="1120" y2="560" stroke="#1f1f1f" stroke-width="1"/>
+  <text x="600" y="582" text-anchor="middle" fill="#383838" font-family="monospace" font-size="10">Cloudflare Workers · Security &amp; Auth Model</text>
+</svg>

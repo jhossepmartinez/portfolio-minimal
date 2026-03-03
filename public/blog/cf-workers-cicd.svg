@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#161616"/>
+
+  <!-- Title -->
+  <text x="600" y="58" text-anchor="middle" fill="#666" font-family="monospace" font-size="13" letter-spacing="2">CI / CD PIPELINE</text>
+  <text x="600" y="78" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="10">build once · promote upward</text>
+
+  <!-- Step labels at top -->
+  <text x="130" y="118" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">push</text>
+  <text x="310" y="118" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">build</text>
+  <text x="490" y="118" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">staging</text>
+  <text x="690" y="118" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">gate</text>
+  <text x="870" y="118" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">production</text>
+  <text x="1060" y="118" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">release</text>
+
+  <!-- horizontal spine -->
+  <line x1="60" y1="300" x2="1140" y2="300" stroke="#222" stroke-width="1.5"/>
+
+  <!-- ── Step 1: git push ── -->
+  <circle cx="130" cy="300" r="32" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="130" y="295" text-anchor="middle" fill="#777" font-family="monospace" font-size="10">git</text>
+  <text x="130" y="311" text-anchor="middle" fill="#777" font-family="monospace" font-size="10">push</text>
+
+  <!-- connector -->
+  <line x1="162" y1="300" x2="238" y2="300" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="234,295 244,300 234,305" fill="#2a2a2a"/>
+
+  <!-- ── Step 2: Build + test ── -->
+  <rect x="248" y="264" width="124" height="72" rx="10" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="310" y="291" text-anchor="middle" fill="#888" font-family="monospace" font-size="11">Build</text>
+  <rect x="264" y="300" width="92" height="16" rx="3" fill="#222"/>
+  <text x="310" y="312" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">wrangler build</text>
+  <text x="310" y="332" text-anchor="middle" fill="#404040" font-family="monospace" font-size="9">artifact sha256</text>
+
+  <!-- connector -->
+  <line x1="372" y1="300" x2="428" y2="300" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="424,295 434,300 424,305" fill="#2a2a2a"/>
+
+  <!-- ── Step 3: Deploy staging ── -->
+  <rect x="438" y="250" width="104" height="100" rx="10" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="490" y="276" text-anchor="middle" fill="#888" font-family="monospace" font-size="11">Staging</text>
+  <rect x="454" y="286" width="72" height="14" rx="3" fill="#222"/>
+  <text x="490" y="298" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">deploy</text>
+  <rect x="454" y="306" width="72" height="14" rx="3" fill="#222"/>
+  <text x="490" y="318" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">smoke test</text>
+  <rect x="454" y="326" width="72" height="14" rx="3" fill="#222"/>
+  <text x="490" y="338" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">integration</text>
+
+  <!-- connector -->
+  <line x1="542" y1="300" x2="628" y2="300" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="624,295 634,300 624,305" fill="#2a2a2a"/>
+
+  <!-- ── Step 4: Gate (must pass) ── -->
+  <!-- diamond -->
+  <polygon points="690,262 726,300 690,338 654,300" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="690" y="296" text-anchor="middle" fill="#777" font-family="monospace" font-size="9">must</text>
+  <text x="690" y="310" text-anchor="middle" fill="#777" font-family="monospace" font-size="9">pass</text>
+
+  <!-- fail path (down) -->
+  <line x1="690" y1="338" x2="690" y2="400" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="700" y="386" fill="#3a3a3a" font-family="monospace" font-size="9">fail → blocked</text>
+
+  <!-- pass connector -->
+  <line x1="726" y1="300" x2="800" y2="300" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="796,295 806,300 796,305" fill="#2a2a2a"/>
+
+  <!-- ── Step 5: Deploy production ── -->
+  <rect x="810" y="250" width="120" height="100" rx="10" fill="#1e1e1e" stroke="#333" stroke-width="1"/>
+  <text x="870" y="276" text-anchor="middle" fill="#999" font-family="monospace" font-size="11">Production</text>
+  <text x="870" y="294" text-anchor="middle" fill="#505050" font-family="monospace" font-size="9">same artifact</text>
+  <rect x="826" y="300" width="88" height="14" rx="3" fill="#222"/>
+  <text x="870" y="312" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">wrangler deploy</text>
+  <rect x="826" y="320" width="88" height="14" rx="3" fill="#222"/>
+  <text x="870" y="332" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">Terraform apply</text>
+  <rect x="826" y="340" width="88" height="14" rx="3" fill="#222"/>
+  <text x="870" y="352" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">env: production</text>
+
+  <!-- connector -->
+  <line x1="930" y1="300" x2="998" y2="300" stroke="#2a2a2a" stroke-width="1.5"/>
+  <polygon points="994,295 1004,300 994,305" fill="#2a2a2a"/>
+
+  <!-- ── Step 6: Release ── -->
+  <rect x="1008" y="272" width="100" height="56" rx="10" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="1058" y="295" text-anchor="middle" fill="#888" font-family="monospace" font-size="11">Release</text>
+  <text x="1058" y="313" text-anchor="middle" fill="#505050" font-family="monospace" font-size="9">CHANGELOG</text>
+  <text x="1058" y="327" text-anchor="middle" fill="#404040" font-family="monospace" font-size="9">semver tag</text>
+
+  <!-- credentials note -->
+  <rect x="330" y="430" width="540" height="44" rx="8" fill="#1a1a1a" stroke="#252525" stroke-width="1"/>
+  <text x="600" y="447" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">Credentials isolated per environment — GitHub Environments secrets</text>
+  <text x="600" y="464" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="10">no manual operations · no console deploys</text>
+
+  <!-- version badges -->
+  <rect x="370" y="510" width="54" height="22" rx="4" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="397" y="525" text-anchor="middle" fill="#606060" font-family="monospace" font-size="10">v1.0.0</text>
+  <line x1="424" y1="521" x2="444" y2="521" stroke="#2a2a2a" stroke-width="1"/>
+  <polygon points="440,517 450,521 440,525" fill="#2a2a2a"/>
+  <rect x="454" y="510" width="54" height="22" rx="4" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="481" y="525" text-anchor="middle" fill="#606060" font-family="monospace" font-size="10">v2.0.0</text>
+  <line x1="508" y1="521" x2="528" y2="521" stroke="#2a2a2a" stroke-width="1"/>
+  <polygon points="524,517 534,521 524,525" fill="#2a2a2a"/>
+  <rect x="538" y="510" width="54" height="22" rx="4" fill="#1e1e1e" stroke="#333" stroke-width="1"/>
+  <text x="565" y="525" text-anchor="middle" fill="#888" font-family="monospace" font-size="10">v2.1.0</text>
+  <text x="650" y="524" fill="#3a3a3a" font-family="monospace" font-size="9">← 10 days · 3 semver releases</text>
+
+  <!-- bottom line -->
+  <line x1="80" y1="590" x2="1120" y2="590" stroke="#1f1f1f" stroke-width="1"/>
+  <text x="600" y="612" text-anchor="middle" fill="#383838" font-family="monospace" font-size="10">Cloudflare Workers · Delivery Pipeline</text>
+</svg>

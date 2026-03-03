@@ -38,6 +38,8 @@ Keeping compute and storage colocated wasn't just a performance choice — it si
 
 Good architecture is defined as much by what was rejected as by what was chosen.
 
+![D1 vs Supabase](/blog/cf-tradeoffs-db.svg)
+
 **Cloudflare D1 over Supabase.** Supabase was provisioned and tested before being reverted in favor of D1. The deciding factor was latency: an external managed Postgres instance introduces a cross-network hop on every request. D1, that is within Cloudflare's network, eliminates this issue. The billing model is also simpler, serverless per-request pricing versus a minimum monthly commitment for a managed database.
 
 **OpenAI over Google AI.** The first version shipped with Google AI. It was replaced in the second major release after evaluating response quality against cost at the target query volume. gpt-4o-mini with minimal reasoning mode consistently outperformed on answer response time.
@@ -59,6 +61,26 @@ Remote state is managed through Terraform Cloud, allowing for a remote state man
 The CI/CD pipeline enforces a strict promotion model: **build once, promote upward**.
 
 When a pull request is opened, the pipeline runs `terraform plan` across both environments and surfaces the diff inside the PR for review. Making all infrastructure changes visible before merge.
+
+```
+Terraform will perform the following actions:
+  # module.worker.cloudflare_worker_version.this must be replaced
+-/+ resource "cloudflare_worker_version" "this" {
+      ~ annotations         = {
+          + workers_message      = (known after apply)
+          + workers_tag          = (known after apply)
+          ~ workers_triggered_by = "create_version_api" -> (known after apply)
+        } -> (known after apply)
+      ~ bindings            = [ # forces replacement
+          ~ {
+                name   = "JWT_SECRET"
+              - simple = {} -> null
+                # (2 unchanged attributes hidden)
+            },
+            # (6 unchanged elements hidden)
+        ]
+
+```
 
 On merge to main, the staging workflow builds the TypeScript bundle, deploys it, and runs database migrations automatically. If and only if staging succeeds, a production deployment becomes available, requiring explicit human approval before proceeding. The production workflow then downloads the *exact same compiled artifact* from the staging run rather than rebuilding from source. What runs in production is byte-for-byte identical to what has been validated and tested in staging.
 
@@ -83,12 +105,6 @@ All authentication failures and application errors emit structured log entries w
 The persistence layer also serves as an audit trail. Every question and answer is stored with a timestamp and the user's ID, enabling cost attribution per user and anomaly detection over time.
 
 ## Iterative Delivery
-
-The project shipped three semantic versions over 10 days, with each version representing a deliberate scope boundary rather than arbitrary milestones.
-
-**v1.0.0** established the core: a working AI endpoint, automated releases, and semantic versioning from the first commit. **v2.0.0** introduced persistent state — a breaking change, acknowledged as such, with the Supabase-to-D1 tradeoff resolved during this phase. **v2.1.0** completed the security and operational layer: environment isolation, OAuth, rate limiting, and observability all landed together.
-
-Post-release work focused on correctness and maintainability — DB normalization for rate-limit integrity, history scoping to authenticated users, and a structural refactor for cleaner separation of concerns.
 
 Each release was driven by a CHANGELOG generated automatically from conventional commit messages, keeping the delivery history readable without manual documentation effort.
 

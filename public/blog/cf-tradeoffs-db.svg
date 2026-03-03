@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300">
+  <rect width="800" height="300" fill="#161616"/>
+
+  <!-- ── Left column: D1 (chosen) ── -->
+  <rect x="40" y="40" width="330" height="220" rx="10" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="205" y="70" text-anchor="middle" fill="#999" font-family="monospace" font-size="13">D1</text>
+  <text x="205" y="88" text-anchor="middle" fill="#505050" font-family="monospace" font-size="10">chosen</text>
+
+  <rect x="60" y="104" width="290" height="1" fill="#222"/>
+
+  <text x="60" y="126" fill="#666" font-family="monospace" font-size="11">latency</text>
+  <text x="330" y="126" text-anchor="end" fill="#888" font-family="monospace" font-size="11">same network</text>
+
+  <text x="60" y="154" fill="#666" font-family="monospace" font-size="11">billing</text>
+  <text x="330" y="154" text-anchor="end" fill="#888" font-family="monospace" font-size="11">per-request</text>
+
+  <text x="60" y="182" fill="#666" font-family="monospace" font-size="11">min. commitment</text>
+  <text x="330" y="182" text-anchor="end" fill="#888" font-family="monospace" font-size="11">none</text>
+
+  <text x="60" y="210" fill="#666" font-family="monospace" font-size="11">cross-network hop</text>
+  <text x="330" y="210" text-anchor="end" fill="#888" font-family="monospace" font-size="11">no</text>
+
+  <text x="60" y="238" fill="#666" font-family="monospace" font-size="11">audit trail</text>
+  <text x="330" y="238" text-anchor="end" fill="#888" font-family="monospace" font-size="11">built-in</text>
+
+  <!-- ── Right column: Supabase (rejected) ── -->
+  <rect x="430" y="40" width="330" height="220" rx="10" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+  <text x="595" y="70" text-anchor="middle" fill="#555" font-family="monospace" font-size="13">Supabase</text>
+  <text x="595" y="88" text-anchor="middle" fill="#3a3a3a" font-family="monospace" font-size="10">reverted</text>
+
+  <rect x="450" y="104" width="290" height="1" fill="#222"/>
+
+  <text x="450" y="126" fill="#444" font-family="monospace" font-size="11">latency</text>
+  <text x="720" y="126" text-anchor="end" fill="#4a4a4a" font-family="monospace" font-size="11">external hop</text>
+
+  <text x="450" y="154" fill="#444" font-family="monospace" font-size="11">billing</text>
+  <text x="720" y="154" text-anchor="end" fill="#4a4a4a" font-family="monospace" font-size="11">monthly minimum</text>
+
+  <text x="450" y="182" fill="#444" font-family="monospace" font-size="11">min. commitment</text>
+  <text x="720" y="182" text-anchor="end" fill="#4a4a4a" font-family="monospace" font-size="11">yes</text>
+
+  <text x="450" y="210" fill="#444" font-family="monospace" font-size="11">cross-network hop</text>
+  <text x="720" y="210" text-anchor="end" fill="#4a4a4a" font-family="monospace" font-size="11">yes</text>
+
+  <text x="450" y="238" fill="#444" font-family="monospace" font-size="11">audit trail</text>
+  <text x="720" y="238" text-anchor="end" fill="#4a4a4a" font-family="monospace" font-size="11">external</text>
+
+  <!-- VS divider -->
+  <text x="400" y="158" text-anchor="middle" fill="#2e2e2e" font-family="monospace" font-size="11">vs</text>
+</svg>
