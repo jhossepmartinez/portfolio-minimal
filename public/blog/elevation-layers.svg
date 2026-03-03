@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#161616"/>
+  <rect x="100" y="80" width="400" height="470" rx="16" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <rect x="130" y="120" width="340" height="24" rx="4" fill="#2a2a2a"/>
+  <rect x="130" y="160" width="280" height="16" rx="4" fill="#222"/>
+  <rect x="130" y="190" width="300" height="16" rx="4" fill="#222"/>
+  <rect x="130" y="220" width="260" height="16" rx="4" fill="#222"/>
+  <rect x="130" y="280" width="340" height="200" rx="8" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+  <rect x="700" y="80" width="400" height="470" rx="16" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1">
+  </rect>
+  <rect x="700" y="80" width="400" height="470" rx="16" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1"/>
+  <rect x="720" y="100" width="360" height="200" rx="8" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+  <rect x="730" y="120" width="80" height="80" rx="40" fill="#2a2a2a"/>
+  <rect x="830" y="140" width="160" height="16" rx="4" fill="#2a2a2a"/>
+  <rect x="830" y="168" width="120" height="12" rx="4" fill="#222"/>
+  <rect x="720" y="320" width="360" height="16" rx="4" fill="#222"/>
+  <rect x="720" y="350" width="340" height="16" rx="4" fill="#222"/>
+  <rect x="720" y="380" width="300" height="16" rx="4" fill="#222"/>
+  <rect x="720" y="420" width="200" height="40" rx="8" fill="#2a2a2a"/>
+  <!-- Shadow layers to show depth -->
+  <ellipse cx="300" cy="590" rx="350" ry="20" fill="rgba(0,0,0,0.3)"/>
+  <ellipse cx="900" cy="590" rx="350" ry="20" fill="rgba(0,0,0,0.3)"/>
+</svg>

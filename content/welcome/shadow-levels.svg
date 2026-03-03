@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#161616"/>
+  <!-- Shadow demo: 3 cards at different elevations -->
+  <g>
+    <!-- Level 1 -->
+    <rect x="100" y="200" width="260" height="260" rx="16" fill="#1c1c1c"/>
+    <rect x="100" y="200" width="260" height="260" rx="16" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+    <text x="230" y="340" text-anchor="middle" fill="#707070" font-family="sans-serif" font-size="14">Level 1</text>
+    <text x="230" y="365" text-anchor="middle" fill="#505050" font-family="monospace" font-size="11">box-shadow: 0 1px 2px</text>
+  </g>
+  <g>
+    <!-- Level 2 -->
+    <rect x="467" y="180" width="260" height="260" rx="16" fill="#1e1e1e" filter="url(#shadow2)"/>
+    <rect x="467" y="180" width="260" height="260" rx="16" fill="none" stroke="#333" stroke-width="1"/>
+    <text x="597" y="320" text-anchor="middle" fill="#888" font-family="sans-serif" font-size="14">Level 2</text>
+    <text x="597" y="345" text-anchor="middle" fill="#505050" font-family="monospace" font-size="11">box-shadow: 0 4px 12px</text>
+  </g>
+  <g>
+    <!-- Level 3 -->
+    <rect x="834" y="160" width="260" height="260" rx="16" fill="#202020" filter="url(#shadow3)"/>
+    <rect x="834" y="160" width="260" height="260" rx="16" fill="none" stroke="#3a3a3a" stroke-width="1"/>
+    <text x="964" y="300" text-anchor="middle" fill="#aaa" font-family="sans-serif" font-size="14">Level 3</text>
+    <text x="964" y="325" text-anchor="middle" fill="#505050" font-family="monospace" font-size="11">box-shadow: 0 12px 40px</text>
+  </g>
+  <defs>
+    <filter id="shadow2" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.25"/>
+    </filter>
+    <filter id="shadow3" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="20" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+</svg>
