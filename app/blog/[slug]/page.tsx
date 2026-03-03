@@ -1,3 +1,6 @@
+import { readdirSync } from "fs";
+import path from "path";
+
 export default async function Page({
   params,
 }: {
@@ -33,7 +36,10 @@ export default async function Page({
 }
 
 export function generateStaticParams() {
-  return [{ slug: "welcome" }, { slug: "about" }];
+  const contentPath = path.join(process.cwd(), "content");
+  const entries = readdirSync(contentPath);
+
+  return entries.map((entry) => [{ slug: entry }]);
 }
 
 export const dynamicParams = false;
