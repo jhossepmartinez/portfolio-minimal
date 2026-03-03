@@ -1,26 +1,43 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    /* --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', */
+    /*     'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', */
+    /*     'Helvetica Neue', sans-serif; */
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+
+    --c-gray1: hsl(0 0% 99%);
+    --c-gray2: hsl(0 0% 97.3%);
+    --c-gray3: hsl(0 0% 95.1%);
+    --c-gray4: hsl(0 0% 93%);
+    --c-gray5: hsl(0 0% 90.9%);
+    --c-gray6: hsl(0 0% 88.7%);
+    --c-gray7: hsl(0 0% 85.8%);
+    --c-gray8: hsl(0 0% 78%);
+    --c-gray9: hsl(0 0% 56.1%);
+    --c-gray10: hsl(0 0% 52.3%);
+    --c-gray11: hsl(0 0% 43.5%);
+    --c-gray12: hsl(0 0% 9%);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
 }

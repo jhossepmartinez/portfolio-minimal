@@ -1,0 +1,79 @@
+---
+title: "Animation as Communication"
+date: "2024-03-10"
+description: "How motion design creates meaning in digital products"
+---
+
+Animation in interfaces isn't about delight — it's about **communication**. Every transition, every micro-interaction, every loading state is an opportunity to help the user understand what's happening.
+
+## Motion Has Meaning
+
+When an element slides in from the right, it communicates direction. When a modal fades in, it communicates overlay. When a button bounces, it communicates feedback.
+
+These aren't arbitrary choices. They're a visual language that, when used consistently, helps users build a mental model of how the interface works.
+
+## The Physics of Attention
+
+Our eyes are drawn to movement. This is an evolutionary trait — in nature, movement means something important is happening. In interfaces, we can use this to our advantage:
+
+- Draw attention to important changes with subtle animation
+- Use stillness to indicate stability and reliability
+- Animate state transitions to maintain spatial context
+- Keep animations brief to avoid stealing focus from the task
+
+## Timing Is Everything
+
+The duration of an animation communicates its importance and the "weight" of the change:
+
+```css
+/* Quick feedback - buttons, toggles */
+.micro {
+  transition-duration: 100ms;
+  transition-timing-function: ease-out;
+}
+
+/* Navigation, panels */
+.standard {
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Complex transitions, page changes */
+.elaborate {
+  transition-duration: 350ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+## Easing Functions
+
+Linear motion feels robotic. Good animation uses easing functions that mimic physical movement:
+
+- **Ease-out** for elements entering the screen (they arrive and settle)
+- **Ease-in** for elements leaving (they accelerate away)
+- **Ease-in-out** for elements that move within the viewport
+- **Spring** for playful, bouncy interactions
+
+## Interruption and Continuity
+
+Real-world interfaces must handle interruption gracefully. What happens when a user triggers a new animation while the previous one is still running?
+
+The answer is **continuity**. The new animation should pick up from wherever the current state is, not snap to a starting position and begin again.
+
+> The best animations are the ones that respect the user's time. They're fast enough to not feel slow, and slow enough to be understood.
+
+## When Not to Animate
+
+Not everything should move. Animation should be reserved for:
+
+1. State changes that benefit from spatial context
+2. Feedback that confirms user actions
+3. Transitions between views or modes
+4. Drawing attention to time-sensitive information
+
+If an animation doesn't serve one of these purposes, it's decoration — and decoration slows people down.
+
+---
+
+Animation is a tool, not a feature. Use it to clarify, to guide, and to communicate. The moment it becomes something users notice for its own sake, it's probably too much.
+
