@@ -25,6 +25,7 @@ resource "cloudflare_pages_project" "this" {
     }
   }
 
+
   # deployment_configs = {
   #   production = {
   #     env_vars = {
