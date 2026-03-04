@@ -29,3 +29,9 @@ resource "cloudflare_pages_project" "this" {
     }
   }
 }
+
+resource "cloudflare_pages_domain" "this" {
+  account_id   = var.cloudflare_account_id
+  project_name = cloudflare_pages_project.this.name
+  name         = "www.jhossep.tech"
+}
