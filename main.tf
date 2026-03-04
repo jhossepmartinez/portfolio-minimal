@@ -31,6 +31,7 @@ resource "cloudflare_pages_project" "this" {
       pr_comments_enabled           = true
       deployments_enabled           = true
       production_deployment_enabled = true
+      preview_deployment_enabled    = true
       preview_deployment_setting    = "custom"
       preview_branch_includes       = ["*"]
       preview_branch_excludes       = ["main"]
