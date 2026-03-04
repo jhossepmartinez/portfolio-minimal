@@ -9,7 +9,6 @@ resource "cloudflare_pages_project" "this" {
     destination_dir = "out"
   }
 
-
   deployment_configs = {
     production = {
       env_vars = {
