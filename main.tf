@@ -9,22 +9,6 @@ resource "cloudflare_pages_project" "this" {
     destination_dir = "out"
   }
 
-  source = {
-    type = "github"
-    config = {
-      owner                          = "jhossepmartinez"
-      owner_id                       = "84037487"
-      repo_name                      = "portfolio-minimal"
-      repo_id                        = "1169498219"
-      production_branch              = "main"
-      pr_comments_enabled            = true
-      production_deployments_enabled = true
-      preview_deployment_setting     = "custom"
-      preview_branch_includes        = ["*"]
-      preview_branch_excludes        = ["main"]
-    }
-  }
-
   deployment_configs = {
     production = {
       env_vars = {
