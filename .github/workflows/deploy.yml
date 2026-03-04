@@ -8,10 +8,6 @@ on:
 
 jobs:
   deploy:
-    env:
-      TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -27,20 +23,6 @@ jobs:
 
       - run: npm ci
       - run: npm run build
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-          terraform_wrapper: true
-
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Plan
-        run: terraform plan
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
