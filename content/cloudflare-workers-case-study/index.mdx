@@ -38,8 +38,6 @@ Keeping compute and storage colocated wasn't just a performance choice — it si
 
 Good architecture is defined as much by what was rejected as by what was chosen.
 
-![D1 vs Supabase](/blog/cf-tradeoffs-db.svg)
-
 **Cloudflare D1 over Supabase.** Supabase was provisioned and tested before being reverted in favor of D1. The deciding factor was latency: an external managed Postgres instance introduces a cross-network hop on every request. D1, that is within Cloudflare's network, eliminates this issue. The billing model is also simpler, serverless per-request pricing versus a minimum monthly commitment for a managed database.
 
 **OpenAI over Google AI.** The first version shipped with Google AI. It was replaced in the second major release after evaluating response quality against cost at the target query volume. gpt-4o-mini with minimal reasoning mode consistently outperformed on answer response time.
