@@ -25,23 +25,22 @@ resource "cloudflare_pages_project" "this" {
     }
   }
 
-
-  # deployment_configs = {
-  #   production = {
-  #     env_vars = {
-  #       NODE_VERSION = {
-  #         type  = "plain_text"
-  #         value = "22"
-  #       }
-  #     }
-  #   }
-  #   preview = {
-  #     env_vars = {
-  #       NODE_VERSION = {
-  #         type  = "plain_text"
-  #         value = "22"
-  #       }
-  #     }
-  #   }
-  # }
+  deployment_configs = {
+    production = {
+      env_vars = {
+        NODE_VERSION = {
+          type  = "plain_text"
+          value = "22"
+        }
+      }
+    }
+    preview = {
+      env_vars = {
+        NODE_VERSION = {
+          type  = "plain_text"
+          value = "22"
+        }
+      }
+    }
+  }
 }
