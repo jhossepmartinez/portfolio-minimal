@@ -1,6 +1,6 @@
 resource "cloudflare_pages_project" "this" {
   account_id        = var.cloudflare_account_id
-  name              = "portfolio"
+  name              = "portfolio-minimal"
   production_branch = "main"
 
   build_config = {
