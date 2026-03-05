@@ -25,7 +25,10 @@ export default async function Page({
     <article>
       {metadata?.title && <h1 className="mb-0">{metadata.title}</h1>}
       {date && (
-        <time className="text-gray-11 text-sm" dateTime={metadata.date}>
+        <time
+          className="text-gray-11 font-semibold text-base"
+          dateTime={metadata.date}
+        >
           {date}
         </time>
       )}
