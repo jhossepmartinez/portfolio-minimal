@@ -6,17 +6,17 @@ export default function MdxLayout({ children }: { children: React.ReactNode }) {
       <aside className="absolute right-full top-1 mr-8 hidden xl:block">
         <Link
           href="/"
-          className="group inline-flex items-center gap-2 text-gray-9 hover:text-gray-12 transition-colors"
+          className="group inline-flex items-center gap-2 text-gray-10 hover:text-gray-12 transition-colors"
           aria-label="Home"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             className="transition-transform group-hover:-translate-x-0.5"
@@ -24,7 +24,9 @@ export default function MdxLayout({ children }: { children: React.ReactNode }) {
             <path d="M19 12H5" />
             <path d="M12 19l-7-7 7-7" />
           </svg>
-          <span className="text-base font-semibold">Home</span>
+          <span className="text-base text-gray-10 hover:text-gray-12 transition-colors">
+            Home
+          </span>
         </Link>
       </aside>
       <div
