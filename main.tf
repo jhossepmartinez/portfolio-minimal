@@ -30,8 +30,18 @@ resource "cloudflare_pages_project" "this" {
   }
 }
 
+resource "cloudflare_dns_record" "this" {
+  zone_id = var.cloudflare_zone_id
+  name    = "www"
+  type    = "CNAME"
+  content = cloudflare_pages_project.this.subdomain
+  proxied = true
+  ttl     = 1
+}
+
 resource "cloudflare_pages_domain" "this" {
   account_id   = var.cloudflare_account_id
   project_name = cloudflare_pages_project.this.name
-  name         = "www.jhossep.tech"
+  name         = var.cloudflare_domain_name
+  depends_on   = [cloudflare_dns_record.this]
 }
