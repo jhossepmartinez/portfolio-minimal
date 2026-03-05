@@ -1,34 +1,6 @@
-import Link from "next/link";
-
 export default function MdxLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative mx-auto w-full max-w-3xl mt-40 mb-80">
-      <aside className="absolute right-full top-1 mr-8 hidden xl:block">
-        <Link
-          href="/"
-          className="group inline-flex items-center gap-2 text-gray-10 hover:text-gray-12 transition-colors"
-          aria-label="Home"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="transition-transform group-hover:-translate-x-0.5"
-          >
-            <path d="M19 12H5" />
-            <path d="M12 19l-7-7 7-7" />
-          </svg>
-          <span className="text-base text-gray-10 hover:text-gray-12 transition-colors">
-            Home
-          </span>
-        </Link>
-      </aside>
       <div
         className={`
           prose max-w-none 

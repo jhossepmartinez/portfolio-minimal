@@ -1,4 +1,4 @@
-import { readdirSync } from "fs";
+import { readdirSync, readFileSync } from "fs";
 import path from "path";
 
 export interface PostMeta {
@@ -6,6 +6,11 @@ export interface PostMeta {
   title: string;
   date: string;
   description: string;
+}
+
+export interface Heading {
+  text: string;
+  id: string;
 }
 
 export async function getPosts(): Promise<PostMeta[]> {
@@ -27,4 +32,24 @@ export async function getPosts(): Promise<PostMeta[]> {
   return posts.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
+}
+
+export function getHeadings(slug: string): Heading[] {
+  const filePath = path.join(process.cwd(), "content", slug, "index.mdx");
+  const source = readFileSync(filePath, "utf-8");
+
+  const headingRegex = /^## (.+)$/gm;
+  const headings: Heading[] = [];
+  let match;
+
+  while ((match = headingRegex.exec(source)) !== null) {
+    const text = match[1].trim();
+    const id = text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
+    headings.push({ text, id });
+  }
+
+  return headings;
 }

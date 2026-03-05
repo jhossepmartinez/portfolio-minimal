@@ -5,12 +5,14 @@ export default async function Home() {
   const posts = await getPosts();
 
   return (
-    <div className="mx-auto max-w-3xl px-6 mt-40 mb-80 text-lg">
+    <div className="mx-auto max-w-3xl mt-40 mb-80 text-lg">
       <header className="mb-16">
         <h1 className="text-lg font-semibold text-gray-12 tracking-tight">
           Jhossep Martinez
         </h1>
-        <p className="mt-2 text-gray-10 font-semibold">Software Engineer</p>
+        <p className="text-gray-11 font-semibold text-base">
+          Software Engineer
+        </p>
       </header>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
