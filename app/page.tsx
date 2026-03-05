@@ -10,9 +10,7 @@ export default async function Home() {
         <h1 className="text-lg font-normal text-gray-12 tracking-tight">
           Jhossep Martinez
         </h1>
-        <p className="mt-2 text-gray-11">
-          Writing about engineering, infrastructure, and building things.
-        </p>
+        <p className="mt-2 text-gray-10">Software Engineer</p>
       </header>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
