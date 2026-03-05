@@ -18,3 +18,4 @@ variable "cloudflare_domain_name" {
   description = "Custom domain name for the portfolio"
   type        = string
 }
+
