@@ -23,7 +23,7 @@ export default async function Page({
 
   return (
     <article>
-      {metadata?.title && <h1 className="mb-0">{metadata.title}</h1>}
+      {metadata?.title && <h1 className="mb-0! mt-0!">{metadata.title}</h1>}
       {date && (
         <time
           className="text-gray-11 font-semibold text-base"
