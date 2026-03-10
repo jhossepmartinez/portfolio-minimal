@@ -1,7 +1,6 @@
 import { readdirSync } from "fs";
 import path from "path";
 import Link from "next/link";
-import { getHeadings } from "@/lib/posts";
 
 export default async function Page({
   params,
@@ -12,7 +11,6 @@ export default async function Page({
   const { default: Post, metadata } = await import(
     `@/content/${slug}/index.mdx`
   );
-  const headings = getHeadings(slug);
 
   const date = new Date(metadata?.date + "T00:00:00").toLocaleDateString(
     undefined,
@@ -26,11 +24,12 @@ export default async function Page({
 
   return (
     <>
-      <aside className="not-prose fixed top-40 right-[calc(50%+384px+2rem)] hidden xl:block mr-20">
-        <nav>
+      {/* Left sidebar — back button */}
+      <aside className="hidden xl:block xl:col-start-1 xl:row-start-1">
+        <nav className="sticky top-40">
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 text-gray-10 hover:text-gray-12 transition-colors mb-8"
+            className="group inline-flex items-center gap-2 text-gray-10 hover:text-gray-12 transition-colors"
             aria-label="Home"
           >
             <svg
@@ -50,25 +49,41 @@ export default async function Page({
             </svg>
             <span className="text-sm font-semibold">Home</span>
           </Link>
-
-          {headings.length > 0 && (
-            <ul className="space-y-2 list-none p-0 m-0">
-              {headings.map((heading) => (
-                <li key={heading.id} className="p-0 m-0">
-                  <a
-                    href={`#${heading.id}`}
-                    className="text-base text-gray-11 hover:text-gray-12 transition-colors leading-snug"
-                  >
-                    {heading.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
         </nav>
       </aside>
 
-      <article>
+      {/* Center column — blog content */}
+      <article
+        className={`
+          col-start-1 xl:col-start-2 w-full max-w-3xl
+          prose max-w-none
+          prose-base md:prose-lg
+          prose-headings:font-semibold prose-headings:text-gray-12 prose-headings:text-base md:prose-headings:text-lg
+          prose-p:text-gray-11 prose-p:font-semibold
+          prose-strong:text-gray-12 prose-strong:font-semibold
+          prose-ul:text-gray-11 prose-ul:font-semibold prose-ol:text-gray-11
+          prose-hr:bg-gray-6 prose-hr:border-0 prose-hr:mt-10 prose-hr:h-px
+          prose-blockquote:border-l-2 prose-blockquote:text-gray-1 prose-blockquote:border-gray-6
+          prose-img:rounded-2xl
+          prose-a:text-gray-12 marker:text-gray-9
+
+          /* CODE BLOCKS (<pre> and <pre><code>) */
+          prose-pre:bg-gray-2 prose-pre:text-gray-11
+          [&_pre_code]:bg-transparent
+
+          /* INLINE CODE (<code> without <pre>) */
+          [&_:not(pre)>code]:bg-gray-3
+          [&_:not(pre)>code]:text-gray-12
+          [&_:not(pre)>code]:px-1.5
+          [&_:not(pre)>code]:py-0.5
+          [&_:not(pre)>code]:rounded-md
+          [&_:not(pre)>code]:font-mono
+
+          /* Remove default Tailwind backticks from inline code */
+          prose-code:before:content-none
+          prose-code:after:content-none
+        `}
+      >
         {metadata?.title && <h1 className="mb-0! mt-0!">{metadata.title}</h1>}
         {date && (
           <time
