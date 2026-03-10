@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,13 +19,18 @@ export const metadata: Metadata = {
   description: "Software Engineer",
 };
 
+const themeScript = `(function(){try{if(localStorage.getItem("theme")==="light"){document.documentElement.classList.add("light")}}catch(e){}})()`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col overflow-x-hidden bg-gray-1 font-sans antialiased`}
       >
@@ -35,6 +41,7 @@ export default function RootLayout({
               &copy; {new Date().getFullYear()} Jhossep Martinez
             </p>
             <div className="flex items-center gap-3">
+              <ThemeToggle />
               <a
                 href="https://github.com/jhossepmartinez"
                 target="_blank"
