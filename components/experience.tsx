@@ -2,7 +2,7 @@ type ExperienceItem = {
   company: string;
   role: string;
   period: string;
-  description: string;
+  description: string[];
 };
 
 const experiences: ExperienceItem[] = [
@@ -10,22 +10,26 @@ const experiences: ExperienceItem[] = [
     company: "KLog.co",
     role: "Junior Software Engineer",
     period: "Sept. 2024 - Feb. 2026",
-    description:
+    description: [
       "Led the design and implementation of the company’s next generation web api, transitioning the implementation to the DCSA standards for logistics.",
+    ],
   },
   {
     company: "USAFE",
     role: "Software Engineer",
     period: "Mar. 2025 - Dec. 2025",
-    description:
-      "Led a team of 6 engineers developing a safe routes platform including Android app, backend services, and admin portal. Architected core infrastructure, defined technical standards, and implemented QA processes. Mentored team members and managed task allocation.",
+    description: [
+      "Led a team of 6 engineers developing a safe routes platform including Android app, backend services, and admin portal.Mentored team members and managed task allocation.",
+      "Designed the infrastructure for our API and handled its deployment.",
+    ],
   },
   {
     company: "Universidad Tecnica Federico Santa Maria",
     role: "Teaching Assistant",
     period: "Mar. 2024 - Jan. 2025",
-    description:
-      "Facilitated learning for the Programming Languages course. Curated engaging content to supplement class material and adapted teaching methods to meet student needs.",
+    description: [
+      "Curated engaging content to supplement classes adapted to students needs.",
+    ],
   },
 ];
 
@@ -41,7 +45,11 @@ export function Experience() {
               <time className="text-xs text-gray-9 shrink-0">{exp.period}</time>
             </div>
             <p className="text-xs text-gray-10">{exp.company}</p>
-            <p className="text-sm text-gray-11 mt-1">• {exp.description}</p>
+            {exp.description.map((desc, index) => (
+              <p key={index} className="text-sm text-gray-11 mt-1">
+                • {desc}
+              </p>
+            ))}
           </div>
         ))}
       </div>
