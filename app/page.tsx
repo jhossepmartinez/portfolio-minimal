@@ -21,7 +21,7 @@ export default async function Home() {
       </header>
 
       {/* About */}
-      <div className="mb-8">
+      <div className="mb-12">
         <p className="text-sm text-gray-11 mb-3">
           Building software with a focus on performance, reliability, and clean
           interfaces.
