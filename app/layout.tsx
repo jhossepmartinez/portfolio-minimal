@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,9 +26,36 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden bg-gray-1 font-sans antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col overflow-x-hidden bg-gray-1 font-sans antialiased`}
       >
-        {children}
+        <div className="flex-1">{children}</div>
+        <footer className="mx-auto w-full max-w-xl px-4 py-8">
+          <div className="flex items-center justify-between">
+            <p className="text-xs text-gray-9">
+              &copy; {new Date().getFullYear()} Jhossep Martinez
+            </p>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://github.com/jhossepmartinez"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-9 transition-colors hover:text-gray-12"
+                aria-label="GitHub"
+              >
+                <GitHubLogoIcon className="size-4" />
+              </a>
+              <a
+                href="https://linkedin.com/in/jhossepmartinez"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-9 transition-colors hover:text-gray-12"
+                aria-label="LinkedIn"
+              >
+                <LinkedInLogoIcon className="size-4" />
+              </a>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { Experience } from "@/components/experience";
 
 export default async function Home() {
   const posts = await getPosts();
+  const firstPost = posts[0].slug;
 
   return (
     <main className="mx-auto w-full max-w-xl px-4 pt-20 pb-20">
@@ -27,10 +28,10 @@ export default async function Home() {
         </p>
         <p className="text-sm text-gray-11 mb-3">
           I share notes on{" "}
-          <Link href="/blog" className="text-gray-12 underline">
+          <Link href={`/blog/${firstPost}`} className="text-gray-12 underline">
             my blog
           </Link>
-          , and open-source code on{" "}
+          , and my code on{" "}
           <a
             href="https://github.com/jhossepmartinez"
             target="_blank"
@@ -81,13 +82,6 @@ export default async function Home() {
           })}
         </ul>
       </section>
-
-      {/* Footer */}
-      <footer className="mt-20 pt-4">
-        <p className="text-xs text-gray-9">
-          &copy; {new Date().getFullYear()} Jhossep Martinez
-        </p>
-      </footer>
     </main>
   );
 }
