@@ -6,13 +6,17 @@ export default async function Home() {
   const posts = await getPosts();
 
   return (
-    <main className="mx-auto flex w-full max-w-xl flex-col px-4 pt-20 pb-20">
-      {/* Header */}
-      <header className="mb-16">
-        <h1 className="text-sm font-medium text-gray-12 mb-0.5">
-          Jhossep Martinez
-        </h1>
-        <p className="text-sm text-gray-11">Software Engineer</p>
+    <main className="mx-auto w-full max-w-xl px-4 pt-20 pb-20">
+      <header className="mb-16 flex items-center">
+        <div className="flex size-13 items-center justify-center rounded-full bg-gray-2 text-sm font-medium text-gray-11 select-none">
+          JM
+        </div>
+        <div className="ml-4">
+          <h1 className="text-sm font-medium text-gray-12 mb-0.5">
+            Jhossep Martinez
+          </h1>
+          <p className="text-sm text-gray-11">Software Engineer</p>
+        </div>
       </header>
 
       {/* About */}
@@ -28,7 +32,7 @@ export default async function Home() {
           </Link>
           , and open-source code on{" "}
           <a
-            href="https://github.com"
+            href="https://github.com/jhossepmartinez"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-12 underline"
@@ -47,13 +51,14 @@ export default async function Home() {
         <h2 className="text-sm font-medium text-gray-12 mb-4">Writing</h2>
         <ul className="flex flex-col gap-3">
           {posts.map((post) => {
-            const date = new Date(
-              post.date + "T00:00:00",
-            ).toLocaleDateString(undefined, {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            });
+            const date = new Date(post.date + "T00:00:00").toLocaleDateString(
+              undefined,
+              {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              },
+            );
 
             return (
               <li key={post.slug}>
