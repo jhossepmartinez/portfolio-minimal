@@ -8,7 +8,7 @@ type ExperienceItem = {
 const experiences: ExperienceItem[] = [
   {
     company: "KLog.co",
-    role: "Junior Software Engineer",
+    role: "Software Engineer",
     period: "Sept. 2024 - Feb. 2026",
     description: [
       "Led the design and implementation of the company’s next generation web api, transitioning the implementation to the DCSA standards for logistics.",
