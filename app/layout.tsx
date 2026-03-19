@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
@@ -34,34 +33,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col overflow-x-hidden bg-gray-1 font-sans antialiased`}
       >
-        <div className="flex-1">{children}</div>
-        <footer className="mx-auto w-full max-w-xl px-4 py-8">
-          <div className="flex items-center justify-between">
-            <p className="text-xs text-gray-9">
-              &copy; {new Date().getFullYear()} Jhossep Martinez
-            </p>
-            <div className="flex items-center gap-3">
-              <ThemeToggle />
-              <a
-                href="https://github.com/jhossepmartinez"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-9 transition-colors hover:text-gray-12"
-                aria-label="GitHub"
-              >
-                <GitHubLogoIcon className="size-4" />
-              </a>
-              <a
-                href="https://linkedin.com/in/jhossepmartinez"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-9 transition-colors hover:text-gray-12"
-                aria-label="LinkedIn"
-              >
-                <LinkedInLogoIcon className="size-4" />
-              </a>
-            </div>
+        <div className="mx-auto w-full max-w-2xl px-4 pt-6">
+          <div className="flex justify-end">
+            <ThemeToggle />
           </div>
+        </div>
+        <div className="flex-1">{children}</div>
+        <footer className="mx-auto w-full max-w-2xl border-t border-gray-4/70 px-4 py-8">
+          <p className="text-xs text-gray-9">
+            &copy; {new Date().getFullYear()} Jhossep Martinez
+          </p>
         </footer>
       </body>
     </html>

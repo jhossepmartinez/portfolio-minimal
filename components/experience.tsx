@@ -39,26 +39,26 @@ const experiences: ExperienceItem[] = [
 
 export function Experience() {
   return (
-    <section className="mb-12">
-      <h2 className="text-sm font-medium text-gray-12 mb-4">Experience</h2>
-      <div className="flex flex-col">
-        {experiences.map((exp, i) => (
-          <div key={i} className={`flex flex-col gap-1`}>
-            <div className="flex items-baseline justify-between gap-4">
-              <span className="text-sm text-gray-12">{exp.role}</span>
-              <time className="text-xs text-gray-9 shrink-0">{exp.period}</time>
-            </div>
-            <p className="text-xs text-gray-10">{exp.company}</p>
-            <div className={`${i !== experiences.length - 1 ? "pb-6" : ""}`}>
-              {exp.description.map((desc, index) => (
-                <p key={index} className="text-sm text-gray-11 mt-1">
-                  • {desc}
-                </p>
-              ))}
-            </div>
+    <div className="flex flex-col gap-4">
+      {experiences.map((exp, i) => (
+        <article
+          key={i}
+          className="rounded-lg border border-gray-4/80 bg-gray-2/40 p-4"
+        >
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h3 className="text-sm font-medium text-gray-12">{exp.role}</h3>
+            <time className="text-xs text-gray-9">{exp.period}</time>
           </div>
-        ))}
-      </div>
-    </section>
+          <p className="mb-3 text-xs text-gray-10">{exp.company}</p>
+          <ul className="space-y-1.5">
+            {exp.description.map((desc, index) => (
+              <li key={index} className="text-sm leading-6 text-gray-11">
+                {desc}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
   );
 }
