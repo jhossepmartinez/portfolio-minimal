@@ -39,7 +39,7 @@ export default function RootLayout({
           </div>
         </div>
         <div className="flex-1">{children}</div>
-        <footer className="mx-auto w-full max-w-2xl border-t border-gray-4/70 px-4 py-8">
+        <footer className="mx-auto w-full max-w-2xl px-4 py-8">
           <p className="text-xs text-gray-9">
             &copy; {new Date().getFullYear()} Jhossep Martinez
           </p>

@@ -39,24 +39,25 @@ const experiences: ExperienceItem[] = [
 
 export function Experience() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-7">
       {experiences.map((exp, i) => (
-        <article
-          key={i}
-          className="rounded-lg border border-gray-4/80 bg-gray-2/40 p-4"
-        >
+        <article key={i}>
           <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
             <h3 className="text-sm font-medium text-gray-12">{exp.role}</h3>
             <time className="text-xs text-gray-9">{exp.period}</time>
           </div>
           <p className="mb-3 text-xs text-gray-10">{exp.company}</p>
-          <ul className="space-y-1.5">
+          <ul className="space-y-2">
             {exp.description.map((desc, index) => (
-              <li key={index} className="text-sm leading-6 text-gray-11">
-                {desc}
+              <li key={index} className="flex gap-3 text-sm leading-6 text-gray-11">
+                <span className="mt-2 block h-1 w-1 rounded-full bg-gray-7" />
+                <span>{desc}</span>
               </li>
             ))}
           </ul>
+          {i !== experiences.length - 1 ? (
+            <div className="mt-6 h-px bg-gradient-to-r from-transparent via-gray-5/60 to-transparent" />
+          ) : null}
         </article>
       ))}
     </div>
