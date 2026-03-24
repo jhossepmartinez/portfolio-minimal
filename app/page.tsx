@@ -36,7 +36,7 @@ export default async function Home() {
             Download Resume
           </a>
           <a
-            href="https://linkedin.com/in/jhossepmartinez"
+            href="https://linkedin.com/in/jhossep-martinez"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-1 py-2 text-sm text-gray-11 underline decoration-gray-7 underline-offset-4 transition-colors hover:text-gray-12 hover:decoration-gray-9 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-8 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-1"
