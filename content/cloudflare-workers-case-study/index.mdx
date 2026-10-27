@@ -29,7 +29,7 @@ The full stack is narrow by design:
 - **Cloudflare Workers** for compute, **Cloudflare D1** for persistence, and **Cloudflare Analytics Engine** for event telemetry — keeping the entire data plane within the same network boundary
 - **Terraform + Terraform Cloud** for infrastructure provisioning and remote state
 - **GitHub Actions** for build, test, and deployment orchestration
-- **OpenAI (gpt-4o-mini)** for AI responses, selected for quality-to-cost ratio
+- **OpenAI (gpt-5-nano)** for AI responses, selected for quality-to-cost ratio
 - **GitHub OAuth 2.0 + JWT** for identity and session management
 
 Keeping compute and storage colocated wasn't just a performance choice — it simplified identity and access management and eliminated a class of cross-service billing complexity.
@@ -38,9 +38,9 @@ Keeping compute and storage colocated wasn't just a performance choice — it si
 
 Good architecture is defined as much by what was rejected as by what was chosen.
 
-**Cloudflare D1 over Supabase.** Supabase was provisioned and tested before being reverted in favor of D1. The deciding factor was latency: an external managed Postgres instance introduces a cross-network hop on every request. D1, that is within Cloudflare's network, eliminates this issue. The billing model is also simpler, serverless per-request pricing versus a minimum monthly commitment for a managed database.
+**Cloudflare D1 over Supabase.** Supabase was provisioned and tested before being reverted in favor of D1. The deciding factor was latency: an external managed Postgres instance introduces a cross-network hop on every request. D1, being within Cloudflare's network, makes that hop much shorter. It doesn't remove it completely, since the database lives in a single location. The billing model is also simpler, serverless per-request pricing versus a minimum monthly commitment for a managed database.
 
-**OpenAI over Google AI.** The first version shipped with Google AI. It was replaced in the second major release after evaluating response quality against cost at the target query volume. gpt-4o-mini with minimal reasoning mode consistently outperformed on answer response time.
+**OpenAI over Google AI.** The first version shipped with Google AI. It was replaced in the second major release after evaluating response quality against cost at the target query volume. gpt-5-nano with minimal reasoning effort consistently outperformed on answer response time.
 
 **Immutable user identifiers for rate limiting.** GitHub usernames are mutable, a user can rename their account. As such, rate limiting must be enforced on the user immutable ID rather than their usernames. This prevents a bypass vector where a user renames their account mid-session to reset their rate limit counter.
 
@@ -52,13 +52,13 @@ Every cloud resource, the Worker script, the database, the rate limit rules, the
 
 The infrastructure is organized around a reusable Terraform module applied independently to two environments. Staging and production share the same module definition but have completely separate secrets and OAuth applications. This means environment parity is guaranteed structurally.
 
-Remote state is managed through Terraform Cloud, allowing for a remote state mangaement and drift protections.
+Remote state lives in Terraform Cloud, which also gives drift protection.
 
 ## Delivery Pipeline
 
 The CI/CD pipeline enforces a strict promotion model: **build once, promote upward**.
 
-When a pull request is opened, the pipeline runs `terraform plan` across both environments and surfaces the diff inside the PR for review. Making all infrastructure changes visible before merge.
+When a pull request is opened, the pipeline runs `terraform plan` across both environments and surfaces the diff inside the PR for review, making all infrastructure changes visible before merge.
 
 ```
 Terraform will perform the following actions:
@@ -92,13 +92,13 @@ Authentication is a two-step flow: GitHub OAuth establishes identity, and a shor
 
 All credentials are stored in GitHub Environments and injected into Terraform at runtime. They never appear in source code, build logs, or version control. Staging and production credentials are scoped to their respective GitHub Environments, meaning a compromised staging secret cannot be used to access production resources.
 
-Rate limiting is enforced at the Cloudflare platform level, not in application code. This makes it tamper-resistant: a bug or exploit in the Worker cannot disable or circumvent the rate limit.
+Rate limiting uses Cloudflare's rate limiting binding, keyed on the user's GitHub ID. The counter is kept by Cloudflare, so the Worker can't reset or change it, but it's still the Worker's code that checks it on every request.
 
 ## Observability
 
 Every request through the `/ask` endpoint produces an asynchronous telemetry event capturing request metadata, response metadata, model latency, and token usage. These events are written to Cloudflare Analytics Engine without blocking the response, making it possible for the user to receive their answer while the telemetry write completes independently.
 
-All authentication failures and application errors emit structured log entries with a unique request identifier, the user's ID, the endpoint, and the full error context. This makes individual request traces reconstructable  without exposing user-identifying information.
+All authentication failures and application errors emit structured log entries with a unique request identifier, the user's ID, the endpoint, and the full error context. This makes individual request traces reconstructable without exposing user-identifying information.
 
 The persistence layer also serves as an audit trail. Every question and answer is stored with a timestamp and the user's ID, enabling cost attribution per user and anomaly detection over time.
 
